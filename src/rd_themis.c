@@ -7,7 +7,7 @@ static int cmd_scell_seal_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     RedisModuleCallReply *reply;
     if (argc != 4) {
         RedisModule_WrongArity(ctx);
-        return REDISMODULE_OK;
+        return REDISMODULE_ERR;
     }
 
     size_t encrypted_data_len=0, pass_len=0, message_len=0;

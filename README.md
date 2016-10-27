@@ -22,3 +22,9 @@ Works like the standard Redis `SET` command, but stores the encrypted data (encr
 
 ### `themis.scell_seal_get key password`
 Decrypt and return stored data.
+
+### `themis.smessage_set key data public_key`
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
+
+### `themis.smessage_get key private_key`
+Decrypt and return stored data.
