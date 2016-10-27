@@ -186,15 +186,15 @@ static int cmd_smessage_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
 
 
 int RedisModule_OnLoad(RedisModuleCtx *ctx) {
-    if (RedisModule_Init(ctx, "themis", 1, REDISMODULE_APIVER_1) == REDISMODULE_ERR)
+    if (RedisModule_Init(ctx, "rd_themis", 1, REDISMODULE_APIVER_1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "themis.scell_seal_set", cmd_scell_seal_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.scell_seal_set", cmd_scell_seal_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "themis.scell_seal_get", cmd_scell_seal_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.scell_seal_get", cmd_scell_seal_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "themis.smessage_set", cmd_smessage_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.smessage_set", cmd_smessage_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
       return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "themis.smessage_get", cmd_smessage_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.smessage_get", cmd_smessage_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
       return REDISMODULE_ERR;
     return REDISMODULE_OK;
 }
