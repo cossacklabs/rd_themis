@@ -10,17 +10,17 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 r.execute_command("module load {}/../rd_themis.so".format(os.getcwd()))
 
 #scell set by rd_themis
-r.execute_command("rd_themis.scell_seal_set {} {} {}".format("key", b"data", "password"))
+r.execute_command("rd_themis.scell_seal_set {} {} {}".format("key", "data", "password"))
 
 #scell get by plain get
 data = r.execute_command("get {}".format("key"))
-enc = scell.scell_seal("password")
-data = enc.decrypt(data, "")
+enc = scell.scell_seal(b"password")
+data = enc.decrypt(data)
 print(data)
 
 #scell set plaint encrypted data
-data = enc.encrypt("data")
-r.execute_command("set {} {}".format("key", data))
+data = enc.encrypt(b"data")
+r.execute_command("set {} {}".format("key", "".join(map(chr, data))))
 
 #scell get data with rd_themis
 data = r.execute_command("rd_themis.scell_seal_get {} {}".format("key", "password"))

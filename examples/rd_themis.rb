@@ -1,6 +1,7 @@
 #!/usr/local/bin/ruby
 
 require "redis"
+require "rubythemis"
 
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 
@@ -13,7 +14,7 @@ redis.call([:"rd_themis.scell_seal_set", "key", "data", "password"])
 #scell get plaint data
 data = redis.call([:"get", "key"])
 seal=Themis::Scell.new("password", Themis::Scell::SEAL_MODE)
-data=seal.decrypt(@data)
+data=seal.decrypt(data)
 p data
 
 #scell set plain data
