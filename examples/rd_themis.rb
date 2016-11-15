@@ -7,12 +7,21 @@ redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 # load module 
 redis.call([:module, "load", Dir.pwd+"/../rd_themis.so"])
 
-#scell set
+#scell set with rd_themis
 redis.call([:"rd_themis.scell_seal_set", "key", "data", "password"])
 
-#scell get
-data = redis.call([:"rd_themis.scell_seal_get", "key", "password"])
+#scell get plaint data
+data = redis.call([:"get", "key"])
+seal=Themis::Scell.new("password", Themis::Scell::SEAL_MODE)
+data=seal.decrypt(@data)
+p data
 
+#scell set plain data
+data = seal.encrypt("data")
+redis.call([:"set", "key", data])
+
+#scell get by rd_themis
+data = redis.call([:"rd_themis.scell_seal_get", "key", "password"])
 p data
 
 #smessage set

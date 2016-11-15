@@ -1,6 +1,7 @@
 #!/usr/bin/python3.5
 
 import redis
+from pythemis import scell
 import os
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -8,13 +9,23 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 #load module
 r.execute_command("module load {}/../rd_themis.so".format(os.getcwd()))
 
-#scell set
-r.execute_command("rd_themis.scell_seal_set {} {} {}".format("key", "data", "password"))
+#scell set by rd_themis
+r.execute_command("rd_themis.scell_seal_set {} {} {}".format("key", b"data", "password"))
 
-#scell get
-data = r.execute_command("rd_themis.scell_seal_get {} {}".format("key", "password"))
-
+#scell get by plain get
+data = r.execute_command("get {}".format("key"))
+enc = scell.scell_seal("password")
+data = enc.decrypt(data, "")
 print(data)
+
+#scell set plaint encrypted data
+data = enc.encrypt("data")
+r.execute_command("set {} {}".format("key", data))
+
+#scell get data with rd_themis
+data = r.execute_command("rd_themis.scell_seal_get {} {}".format("key", "password"))
+print(data)
+
 
 #smessage set
 r.execute_command("rd_themis.smessage_set {} {} {}".format("key", "data", "\x55\x45\x43\x32\x00\x00\x00\x2d\x6b\xbb\x79\x79\x03\xfa\xb7\x33\x3a\x4d\x6e\xb7\xc2\x59\xde\x78\x96\xfa\x69\xe6\x63\x86\x91\xc2\x65\xa0\x92\xf6\x5a\x22\x3c\xa9\x8e\xc9\xa7\x35\x42"))
