@@ -14,7 +14,7 @@ static int cmd_scell_seal_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     const char *pass = RedisModule_StringPtrLen(argv[3], &pass_len);
     const char *message = RedisModule_StringPtrLen(argv[2], &message_len);
     if(THEMIS_BUFFER_TOO_SMALL!=themis_secure_cell_encrypt_seal((const uint8_t*)pass, pass_len, NULL, 0, (const uint8_t*)message, message_len, NULL, &encrypted_data_len)){
-      RedisModule_ReplyWithError(ctx, "ERR secure seal encription failed (length determination)");
+      RedisModule_ReplyWithError(ctx, "ERR secure seal encryption failed (length determination)");
       return REDISMODULE_ERR;      
     }
     uint8_t *encrypted_data = malloc(encrypted_data_len);
@@ -25,7 +25,7 @@ static int cmd_scell_seal_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     themis_status_t res = themis_secure_cell_encrypt_seal((const uint8_t*)pass, pass_len, NULL, 0, (const uint8_t*)message, message_len, encrypted_data, &encrypted_data_len);
     if(THEMIS_SUCCESS!=res){
       free(encrypted_data);
-      RedisModule_ReplyWithError(ctx, "ERR secure seal encription failed");
+      RedisModule_ReplyWithError(ctx, "ERR secure seal encryption failed");
       return REDISMODULE_ERR;      
     }
     reply = RedisModule_Call(ctx, "SET", "sb!", argv[1], encrypted_data, encrypted_data_len);
@@ -56,7 +56,7 @@ static int cmd_scell_seal_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     const char *pass = RedisModule_StringPtrLen(argv[2], &pass_len);
     const char *message = RedisModule_CallReplyStringPtr(reply, &message_len);
     if(THEMIS_BUFFER_TOO_SMALL!=themis_secure_cell_decrypt_seal((const uint8_t*)pass, pass_len, NULL, 0, (const uint8_t*)message, message_len, NULL, &decrypted_data_len)){
-      RedisModule_ReplyWithError(ctx, "ERR secure seal decription failed (length determination)");
+      RedisModule_ReplyWithError(ctx, "ERR secure seal decryption failed (length determination)");
       return REDISMODULE_ERR;      
     }
     uint8_t *decrypted_data = malloc(decrypted_data_len);
@@ -66,7 +66,7 @@ static int cmd_scell_seal_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     }
     if(THEMIS_SUCCESS!=themis_secure_cell_decrypt_seal((const uint8_t*)pass, pass_len, NULL, 0, (const uint8_t*)message, message_len, decrypted_data, &decrypted_data_len)){
       free(decrypted_data);
-      RedisModule_ReplyWithError(ctx, "ERR secure seal decription failed");
+      RedisModule_ReplyWithError(ctx, "ERR secure seal decryption failed");
       return REDISMODULE_ERR;      
     }
     RedisModule_ReplyWithStringBuffer(ctx, (const char*)decrypted_data, decrypted_data_len);
@@ -144,7 +144,7 @@ static int cmd_smessage_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
     const char *message = RedisModule_StringPtrLen(argv[2], &message_len);
     uint8_t *encrypted_data=NULL;
     if(0 != smessage_enc((const uint8_t*)public_key, public_key_len, (const uint8_t*)message, message_len, &encrypted_data, (uint32_t*)&encrypted_data_len)){
-      RedisModule_ReplyWithError(ctx, "ERR secure message encription failed");
+      RedisModule_ReplyWithError(ctx, "ERR secure message encryption failed");
       return REDISMODULE_ERR;      
     }
     reply = RedisModule_Call(ctx, "SET", "sb!", argv[1], encrypted_data, encrypted_data_len);
@@ -176,7 +176,7 @@ static int cmd_smessage_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
     const char *message = RedisModule_CallReplyStringPtr(reply, &message_len);
     uint8_t *decrypted_data = NULL;    
     if(0 != smessage_dec((const uint8_t*)private_key, private_key_len, (const uint8_t*)message, message_len, &decrypted_data, (uint32_t*)&decrypted_data_len)){
-      RedisModule_ReplyWithError(ctx, "ERR secure message encription failed");
+      RedisModule_ReplyWithError(ctx, "ERR secure message encryption failed");
       return REDISMODULE_ERR;      
     }
     RedisModule_ReplyWithStringBuffer(ctx, (const char*)decrypted_data, decrypted_data_len);
