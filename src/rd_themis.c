@@ -27,8 +27,8 @@ static int cmd_scell_seal_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     }
 
     size_t encrypted_data_len=0, pass_len=0, message_len=0;
-    const char *pass = RedisModule_StringPtrLen(argv[3], &pass_len);
-    const char *message = RedisModule_StringPtrLen(argv[2], &message_len);
+    const char *pass = RedisModule_StringPtrLen(argv[2], &pass_len);
+    const char *message = RedisModule_StringPtrLen(argv[3], &message_len);
     if(THEMIS_BUFFER_TOO_SMALL!=themis_secure_cell_encrypt_seal((const uint8_t*)pass, pass_len, NULL, 0, (const uint8_t*)message, message_len, NULL, &encrypted_data_len)){
       RedisModule_ReplyWithError(ctx, "ERR secure seal encryption failed (length determination)");
       return REDISMODULE_ERR;      
@@ -156,8 +156,8 @@ static int cmd_smessage_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
     }
 
     size_t encrypted_data_len=0, public_key_len=0, message_len=0;
-    const char *public_key = RedisModule_StringPtrLen(argv[3], &public_key_len);
-    const char *message = RedisModule_StringPtrLen(argv[2], &message_len);
+    const char *public_key = RedisModule_StringPtrLen(argv[2], &public_key_len);
+    const char *message = RedisModule_StringPtrLen(argv[3], &message_len);
     uint8_t *encrypted_data=NULL;
     if(0 != smessage_enc((const uint8_t*)public_key, public_key_len, (const uint8_t*)message, message_len, &encrypted_data, (uint32_t*)&encrypted_data_len)){
       RedisModule_ReplyWithError(ctx, "ERR secure message encryption failed");
@@ -204,13 +204,13 @@ static int cmd_smessage_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
 int RedisModule_OnLoad(RedisModuleCtx *ctx) {
     if (RedisModule_Init(ctx, "rd_themis", 1, REDISMODULE_APIVER_1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "rd_themis.scell_seal_set", cmd_scell_seal_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.cset", cmd_scell_seal_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "rd_themis.scell_seal_get", cmd_scell_seal_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.cget", cmd_scell_seal_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
         return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "rd_themis.smessage_set", cmd_smessage_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.mset", cmd_smessage_encrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
       return REDISMODULE_ERR;
-    if (RedisModule_CreateCommand(ctx, "rd_themis.smessage_get", cmd_smessage_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
+    if (RedisModule_CreateCommand(ctx, "rd_themis.mget", cmd_smessage_decrypt, "no-monitor fast", 1, 1, 1) == REDISMODULE_ERR)
       return REDISMODULE_ERR;
     return REDISMODULE_OK;
 }
