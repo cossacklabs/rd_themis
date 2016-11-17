@@ -64,7 +64,7 @@ static int cmd_scell_seal_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv,
     }
 
     if (REDISMODULE_REPLY_STRING != RedisModule_CallReplyType(reply)) {
-      RedisModule_ReplyWithError(ctx, "WRONGTYPE Operation against a key holding the wrong kind of value");
+      RedisModule_ReplyWithError(ctx, REDISMODULE_ERRORMSG_WRONGTYPE);
       return REDISMODULE_ERR;      
     }
 
@@ -183,7 +183,7 @@ static int cmd_smessage_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
     }
 
     if (REDISMODULE_REPLY_STRING != RedisModule_CallReplyType(reply)) {
-      RedisModule_ReplyWithError(ctx, "WRONGTYPE Operation against a key holding the wrong kind of value");
+      RedisModule_ReplyWithError(ctx, REDISMODULE_ERRORMSG_WRONGTYPE);
       return REDISMODULE_ERR;      
     }
 
