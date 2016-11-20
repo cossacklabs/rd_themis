@@ -17,14 +17,14 @@ Quick start guide
 Commands
 ---
 
-### `themis.scell_seal_set key data password`
+### `rd_themis.cset key password data`
 Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with themis secure cell in seal mode) instead of the clear data.
 
-### `themis.scell_seal_get key password`
+### `rd_themis.cget key password`
 Decrypt and return stored data.
 
-### `themis.smessage_set key data public_key`
+### `rd_themis.mset key public_key data`
 Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
 
-### `themis.smessage_get key private_key`
+### `rd_themis.mget key private_key`
 Decrypt and return stored data.
