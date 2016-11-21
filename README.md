@@ -9,13 +9,14 @@ and later get them.
 Quick start guide
 ---
 
-1. Build a Redis server with support for modules.
-2. Build the rd_themis module:
+1. Build a Redis server with support for modules.  
+2. Build the rd_themis module:  
 
-```
-git clone --recursive https://github.com/cossacklabs/rd_themis
-make
-```
+    ```
+    git clone --recursive https://github.com/cossacklabs/rd_themis
+    make
+    ```
+
 3. To load the module, Start Redis with the `--loadmodule /path/to/module.so` option, add it as a directive to the configuration file or send a `MODULE LOAD` command.
 
 
