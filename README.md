@@ -9,8 +9,8 @@ and later get them.
 Quick start guide
 ---
 
-1. Build a Redis server with support for modules.  
-2. Build the rd_themis module:  
+1. Build a Redis server with support for modules.
+2. Build the rd_themis module:
 
     ```
     git clone --recursive https://github.com/cossacklabs/rd_themis
@@ -33,4 +33,18 @@ Decrypt and return stored data.
 Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
 
 ### `rd_themis.msget key private_key`
+Decrypt and return stored data.
+
+Commands alternatives uses `RedisModule_BlockClient` API
+
+### `rd_themis.csetbl key password data`
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with themis secure cell in seal mode) instead of the clear data.
+
+### `rd_themis.cgetbl key password`
+Decrypt and return stored data.
+
+### `rd_themis.mssetbl key public_key data`
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
+
+### `rd_themis.msgetbl key private_key`
 Decrypt and return stored data.
