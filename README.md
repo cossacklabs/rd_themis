@@ -36,6 +36,7 @@ Works like the standard Redis `SET` command, but stores the encrypted data (encr
 Decrypt and return stored data.
 
 Commands alternatives uses `RedisModule_BlockClient` API
+---
 
 ### `rd_themis.csetbl key password data`
 Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with themis secure cell in seal mode) instead of the clear data.
