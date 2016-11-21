@@ -1,10 +1,11 @@
-# rd_themis
+# Rd_Themis
 
 Redis module for Themis
 ===
 
-This module provides a simple and secure way to store data in Redis
-and later get them.
+This module provides a simple and secure way to store data in Redis via encrypting/decrypting with various [Themis](https://www.github.com/cossacklabs/themis) primitives. 
+
+It is Apache 2.0 licensed, so you may use it quite freely.
 
 Quick start guide
 ---
@@ -53,3 +54,11 @@ Works like the standard Redis `SET` command, but stores the encrypted data (encr
 
 ### `rd_themis.msgetbl key private_key`
 Decrypt and return stored data.
+
+Examples and use-cases
+--- 
+
+In `/examples/`, we provide two simple examples on using Themis within Python and Ruby. They require corresponding Themis wrappers ([Python package](https://pypi.python.org/pypi/pythemis), [Ruby Gem](https://rubygems.org/gems/rubythemis)) 
+
+Rd_Themis is especially beneficial within apps, which use Themis for many things. For example, you may encrypt something in your Python application, store it in Redis via regular `SET` command, then fetch the same blob of data from JS code in environment, which doesn't have Themis port, and use `rd_themis.cget` to decrypt the blob.
+
