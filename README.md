@@ -58,7 +58,7 @@ Decrypt and return stored data.
 Examples and use-cases
 --- 
 
-In `/examples/`, we provide two simple examples on using Themis within Python and Ruby. They require corresponding Themis wrappers ([Python package](https://pypi.python.org/pypi/pythemis), [Ruby Gem](https://rubygems.org/gems/rubythemis)) 
+In `/examples/`, we've put two simple examples on using Rd_Themis in Python and Ruby. They require corresponding Themis wrappers ([Python package](https://pypi.python.org/pypi/pythemis), [Ruby Gem](https://rubygems.org/gems/rubythemis)) to run.
 
 Rd_Themis is especially beneficial within apps, which use Themis for many things. For example, you may encrypt something in your Python application, store it in Redis via regular `SET` command, then fetch the same blob of data from JS code in environment, which doesn't have Themis port, and use `rd_themis.cget` to decrypt the blob.
 
