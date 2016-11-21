@@ -14,6 +14,7 @@ Quick start guide
 
     ```
     git clone --recursive https://github.com/cossacklabs/rd_themis
+    cd rd_themis
     make
     ```
 
