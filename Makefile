@@ -35,4 +35,4 @@ clean:
 	rm -rf *.so *.o
 
 test: all
-	./test.sh
+	./test/test.sh

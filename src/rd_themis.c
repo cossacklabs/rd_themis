@@ -153,7 +153,6 @@ static int cmd_smessage_encrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
         RedisModule_WrongArity(ctx);
         return REDISMODULE_OK;
     }
-
     uint8_t new_private_key[10240];
     uint8_t new_public_key[10240];
     size_t new_private_key_length=10240, new_public_key_length=10240;
@@ -213,7 +212,7 @@ static int cmd_smessage_decrypt(RedisModuleCtx *ctx, RedisModuleString **argv, i
     uint8_t *decrypted_data = NULL;    
     if(0 != smessage_dec(private_key, private_key_len, message, message_len, &decrypted_data, (uint32_t*)&decrypted_data_len)){
       RedisModule_CloseKey(key);
-      RedisModule_ReplyWithError(ctx, "ERR secure message encryption failed");
+      RedisModule_ReplyWithError(ctx, "ERR secure message decryption failed");
       return REDISMODULE_ERR;      
     }
     RedisModule_CloseKey(key);
