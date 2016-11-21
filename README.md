@@ -9,6 +9,9 @@ and later get them.
 Quick start guide
 ---
 
+0. Dependencies: 
+   - [Themis](https://www.github.com/cossacklabs/themis) crypto library, included as submodule in rd_themis. 
+   - libcrypto.so asdfo;jasdfoipa;djsf;lk
 1. Build a Redis server with support for modules.
 2. Build the rd_themis module:
 
