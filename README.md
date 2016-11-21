@@ -1,4 +1,4 @@
-# RD_Themis
+# RD_Themis v.0.1
 
 Redis module for Themis
 ===
@@ -50,7 +50,7 @@ Works like the standard Redis `SET` command, but stores the encrypted data (encr
 ### `rd_themis.msget key private_key`
 Decrypt and return stored data.
 
-Commands alternatives uses `RedisModule_BlockClient` API
+Command alternatives, using `RedisModule_BlockClient` API
 ---
 
 ### `rd_themis.csetbl key password data`
