@@ -1,4 +1,4 @@
-# Rd_Themis
+# RD_Themis
 
 Redis module for Themis
 ===
@@ -22,20 +22,30 @@ Quick start guide
     make
     ```
 
-3. To load the module, Start Redis with the `--loadmodule /path/to/module.so` option, add it as a directive to the configuration file or send a `MODULE LOAD` command.
+3. To load the module, start Redis with the `--loadmodule /path/to/module.so` option, add it as a directive to the configuration file or send a `MODULE LOAD` command.
 
+Features
+---
+
+**Symmetric container, cget/cset **: Encrypts data with [Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) symmetric container with context awareness, authenticity and other features.
+
+**Asymmetric container, msget/msset**: One-way asymmetric container, which was born in [Acra](https://cossacklabs.com/acra/)'s development and will emerge in next versions of Themis, it allows any piece of code to: 
+1. Encrypt payload with random symmetric key.
+2. Store this key in asymmetric envelope, sent from random keypair to desired keypair. 
+3. Stack these together with format control. 
+It enables you to bind secrecy and authenticity to one private key, while preserving speed benefits of symmetric cryptography over main payload. 
 
 Commands
 ---
 
 ### `rd_themis.cset key password data`
-Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with themis secure cell in seal mode) instead of the clear data.
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with [Themis Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) in Seal Mode) instead of the plaintext data.
 
 ### `rd_themis.cget key password`
 Decrypt and return stored data.
 
 ### `rd_themis.msset key public_key data`
-Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with [Themis Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) with random key, wrapped in [Themis Secure Message](https://github.com/cossacklabs/themis/wiki/Secure-Message-cryptosystem) with random sender key and fixed decryption key) instead of the clear data.
 
 ### `rd_themis.msget key private_key`
 Decrypt and return stored data.
@@ -44,13 +54,13 @@ Commands alternatives uses `RedisModule_BlockClient` API
 ---
 
 ### `rd_themis.csetbl key password data`
-Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with themis secure cell in seal mode) instead of the clear data.
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with [Themis Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) in Seal Mode) instead of the plaintext data.
 
 ### `rd_themis.cgetbl key password`
 Decrypt and return stored data.
 
 ### `rd_themis.mssetbl key public_key data`
-Works like the standard Redis `SET` command, but stores the encrypted data (encrypted by themis secure message with randomly generated key pair and public_key) instead of the clear data.
+Works like the standard Redis `SET` command, but stores the encrypted data (encrypted with [Themis Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) with random key, wrapped in [Themis Secure Message](https://github.com/cossacklabs/themis/wiki/Secure-Message-cryptosystem) with random sender key and fixed decryption key) instead of the clear data.
 
 ### `rd_themis.msgetbl key private_key`
 Decrypt and return stored data.
