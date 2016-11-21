@@ -14,18 +14,24 @@
 # limitations under the License.
 #
 
-CFLAGS = -I. -Wall -g -fPIC -Og -std=gnu99  
-LIBS += -lthemis
+CFLAGS = -I. -Isrc/themis/src -Wall -g -fPIC -Og -std=gnu99  
+LIBS += -lcrypto
 
 all: rd_themis.so
+
+src/themis/build/libsoter.a:
+	cd src/themis && make && cd -
+
+src/themis/build/libthemis.a: src/themis/build/libsoter.a
 
 rd_themis.o: src/rd_themis.c
 	$(CC) $(CFLAGS) -c -o $@ src/rd_themis.c
 
-rd_themis.so: rd_themis.o 
-	$(LD) -o $@ rd_themis.o -shared $(LIBS) -lc 
+rd_themis.so: rd_themis.o src/themis/build/libthemis.a 
+	$(LD) -o $@ rd_themis.o src/themis/build/libthemis.a src/themis/build/libsoter.a -shared $(LIBS) -lc 
 
 clean:
+	cd src/themis && make clean && cd -
 	rm -rf *.so *.o
 
 test: all
