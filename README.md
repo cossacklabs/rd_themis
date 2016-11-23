@@ -30,6 +30,7 @@ Features
 **Symmetric container, cget/cset**: Encrypts data with [Secure Cell](https://github.com/cossacklabs/themis/wiki/Secure-Cell-cryptosystem) symmetric container with context awareness, authenticity and other features.
 
 **Asymmetric container, msget/msset**: One-way asymmetric container, which was born in [Acra](https://cossacklabs.com/acra/)'s development and will emerge in next versions of Themis, it allows any piece of code to: 
+
 1. Encrypt payload with random symmetric key.
 2. Store this key in asymmetric envelope, sent from random keypair to desired keypair. 
 3. Stack these together with format control. 
